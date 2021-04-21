@@ -45,7 +45,7 @@ Code | Description
 403 | Authentication Failure
 500 | Unknown Error
 
-All API responses follow and consistent response wrapper. 
+All API responses follow consistent response wrapper and structure. 
 
 #### Error Response
 > `{code: number, message: string, success: boolean = false}`
