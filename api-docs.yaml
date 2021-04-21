@@ -109,42 +109,6 @@ paths:
           description: Server Error
       security:
       - bearerToken: []
-  /quoteStatus:
-    get:
-      tags:
-      - quotes
-      summary: Get Quote Status
-      operationId: getQuoteStatus
-      parameters:
-      - name: quoteId
-        in: query
-        required: true
-        schema:
-          type: string
-          format: uuid
-      responses:
-        "200":
-          description: Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/QuoteStatusResponse'
-        "400":
-          description: Request Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        "403":
-          description: Authentication Failure
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        "500":
-          description: Server Error
-      security:
-      - bearerToken: []
   /api/v1/userDetails:
     get:
       tags:
@@ -215,6 +179,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegisterResponse'
+        "400":
+          description: Request Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Server Error
+      security:
+      - bearerToken: []
+  /api/v1/quoteStatus:
+    get:
+      tags:
+      - quotes
+      summary: Get Quote Status
+      operationId: getQuoteStatus
+      parameters:
+      - name: quoteId
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteStatusResponse'
         "400":
           description: Request Error
           content:
@@ -535,6 +535,32 @@ components:
         pandPLPreferredLimit:
           type: integer
           format: int64
+    UserDetailsResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ClientInformation'
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        success:
+          type: boolean
+          default: true
+    RegisterResponse:
+      type: object
+      properties:
+        data:
+          type: string
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        success:
+          type: boolean
+          default: true
     Policy:
       type: object
       properties:
@@ -589,32 +615,6 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/QuoteResponse'
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        success:
-          type: boolean
-          default: true
-    UserDetailsResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ClientInformation'
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        success:
-          type: boolean
-          default: true
-    RegisterResponse:
-      type: object
-      properties:
-        data:
-          type: string
         code:
           type: integer
           format: int32
