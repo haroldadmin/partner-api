@@ -80,14 +80,9 @@ upcover requires a valid JWT token for access to any/all of its APIs. This API c
 This API can be used to either list all occupations or search for occupations given a keyword. The results can be filtered by providing an optional insuranceProduct filter as well.
 
 **OpenAPI Schema**
-```{
-      "get": {
-        "tags": \[
-          "occupations"
-        \],
-        "summary": "Get Occupations",
-        "operationId": "getOccupations",
-        "parameters": \[
+```
+      {
+       "parameters": \[
           {
             "name": "search",
             "in": "query",
@@ -109,46 +104,5 @@ This API can be used to either list all occupations or search for occupations gi
               \]
             }
           }
-        \],
-        "responses": {
-          "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OccupationResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Request Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Authentication Failure",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        },
-        "security": \[
-          {
-            "bearerToken": \[\]
-          }
         \]
-      }
-    }```
+        }```
