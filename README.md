@@ -105,4 +105,4 @@ This API can be used to either list all occupations or search for occupations gi
             }
           }
         \]
-        }```
+        }
