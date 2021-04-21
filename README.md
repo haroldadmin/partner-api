@@ -67,11 +67,42 @@ Currently, the following insurance products are supported, with more coming soon
 
 upcover requires a valid JWT token for access to any/all of its APIs. This API can be used to *login* to upcover and get an access token. 
 
-> **Request OpenAPI Schema**
-> `{"type":"object","properties":{"username":{"type":"string"},"password":{"type":"string"},"authType":{"type":"string","enum":\["USERNAME\_PASSWORD"\]}}}`
+**Request OpenAPI Schema**
+```javascript
+{
+   "type":"object",
+   "properties":{
+      "username":{
+         "type":"string"
+      },
+      "password":{
+         "type":"string"
+      },
+      "authType":{
+         "type":"string",
+         "enum":[
+            "USERNAME_PASSWORD"
+         ]
+      }
+   }
+}
+```
 
-> **Response OpenAPI Schema**
-> `{"type":"object","properties":{"accessToken":{"type":"string"},"expiresInSeconds":{"type":"integer","format":"int64"}}}`
+**Response OpenAPI Schema**
+```javascript
+{
+   "type":"object",
+   "properties":{
+      "accessToken":{
+         "type":"string"
+      },
+      "expiresInSeconds":{
+         "type":"integer",
+         "format":"int64"
+      }
+   }
+}
+```
 
 ## Occupations
 > **GET**
@@ -80,29 +111,86 @@ upcover requires a valid JWT token for access to any/all of its APIs. This API c
 This API can be used to either list all occupations or search for occupations given a keyword. The results can be filtered by providing an optional insuranceProduct filter as well.
 
 **Request OpenAPI Schema**
-```
+```javascript
+{
+   "parameters":[
       {
-       "parameters": \[
-          {
-            "name": "search",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
+         "name":"search",
+         "in":"query",
+         "required":false,
+         "schema":{
+            "type":"string"
+         }
+      },
+      {
+         "name":"productFilter",
+         "in":"query",
+         "required":false,
+         "schema":{
+            "type":"string",
+            "enum":[
+               "HEALTH_PROFESSIONAL",
+               "MANAGEMENT_LIABILITY",
+               "CYBER_LIABILITY"
+            ]
+         }
+      }
+   ]
+}
+```
+**Response OpenAPI Schema**
+
+The successful response returns
+
+```javascript
+{
+   "type":"object",
+   "properties":{
+      "data":{
+         "type":"array",
+         "items":{
+            "type":"object",
+            "properties":{
+               "name":{
+                  "type":"string"
+               },
+               "occupationId":{
+                  "type":"integer",
+                  "format":"int64"
+               },
+               "supportedProducts":{
+                  "type":"array",
+                  "items":{
+                     "type":"string",
+                     "enum":[
+                        "HEALTH_PROFESSIONAL",
+                        "MANAGEMENT_LIABILITY",
+                        "CYBER_LIABILITY"
+                     ]
+                  }
+               }
             }
-          },
-          {
-            "name": "productFilter",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": \[
-                "HEALTH\_PROFESSIONAL",
-                "MANAGEMENT\_LIABILITY",
-                "CYBER\_LIABILITY"
-              \]
-            }
-          }
-        \]
-        }
+         }
+      },
+      "code":{
+         "type":"integer",
+         "format":"int32"
+      },
+      "message":{
+         "type":"string"
+      },
+      "success":{
+         "type":"boolean",
+         "default":true
+      }
+   }
+}
+```
+
+## Quick Quote
+> **POST**
+> `/api/v1/quickQuote`
+
+
+
+
