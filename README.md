@@ -21,6 +21,9 @@ This document refers to the first of these approaces i.e. the Partner API. The w
 ## OpenAPI Schema Files
 Please, refer to OpenAPI schema files (`.yaml` and/or `.json`) for detailed reference of the API. This document only provides a general overview and flow of the APIs.
 
+## Content-Type
+All API requests and response expect and return content in `application/json` by default unless explicitly specified otherwise.
+
 ## Environments
 The endpoints below are tentative, however upcover will still offer three seperate environments for partner APIs.
 
