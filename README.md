@@ -79,7 +79,7 @@ upcover requires a valid JWT token for access to any/all of its APIs. This API c
 
 This API can be used to either list all occupations or search for occupations given a keyword. The results can be filtered by providing an optional insuranceProduct filter as well.
 
-**OpenAPI Schema**
+**Request OpenAPI Schema**
 ```
       {
        "parameters": \[
