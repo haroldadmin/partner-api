@@ -528,3 +528,302 @@ In case the quote was binded the status will reflect `PURCHASED` status along wi
 }
 ```
 
+## User Details
+
+> **GET**
+> `/api/v1/userDetails`
+
+This API can be used to fetch user details
+
+**Request OpenAPI Schema**
+
+```javascript
+{
+   "parameters":[
+      {
+         "name":"userEmail",
+         "in":"query",
+         "required":true,
+         "schema":{
+            "type":"string",
+            "format":"email"
+         }
+      }
+   ]
+}		
+```
+
+**Response OpenAPI Schema**
+
+```javascript
+{
+   "type":"object",
+   "properties":{
+      "data":{
+         "$ref":"#/components/schemas/ClientInformation"
+      },
+      "code":{
+         "type":"integer",
+         "format":"int32"
+      },
+      "message":{
+         "type":"string"
+      },
+      "success":{
+         "type":"boolean",
+         "default":true
+      }
+   }
+}
+```
+
+```javascript
+{
+   "ClientInformation":{
+      "required":[
+         "emailAddress",
+         "firstName",
+         "lastName"
+      ],
+      "type":"object",
+      "properties":{
+         "firstName":{
+            "type":"string"
+         },
+         "lastName":{
+            "type":"string"
+         },
+         "abn":{
+            "maxLength":11,
+            "minLength":11,
+            "type":"string"
+         },
+         "entityType":{
+            "type":"string",
+            "default":"SOLE_TRADER",
+            "enum":[
+               "ASSOCIATION",
+               "COOPERATIVE",
+               "EMPLOYEE",
+               "PARTNERSHIP",
+               "PRIVATE_COMPANY",
+               "PUBLIC_COMPANY",
+               "SOLE_TRADER"
+            ]
+         },
+         "companyName":{
+            "type":"string"
+         },
+         "mobileNumber":{
+            "type":"string"
+         },
+         "landlineNumber":{
+            "type":"string"
+         },
+         "addressLine1":{
+            "type":"string"
+         },
+         "addressLine2":{
+            "type":"string"
+         },
+         "suburb":{
+            "type":"string"
+         },
+         "state":{
+            "type":"string",
+            "default":"NSW",
+            "enum":[
+               "ACT",
+               "NSW",
+               "NT",
+               "QLD",
+               "SA",
+               "TAS",
+               "VIC"
+            ]
+         },
+         "postalCode":{
+            "maxLength":4,
+            "minLength":3,
+            "type":"string"
+         },
+         "emailAddress":{
+            "type":"string",
+            "format":"email"
+         }
+      }
+   }
+}
+```
+
+## Active Policies
+
+>**GET**
+>`/api/v1/activePolicies`
+
+This API can be used to fetch active policies of a user
+
+**Request OpenAPI Schema**
+
+```javascript
+{
+   "parameters":[
+      {
+         "name":"userEmail",
+         "in":"query",
+         "required":true,
+         "schema":{
+            "type":"string",
+            "format":"email"
+         }
+      }
+   ]
+}
+```
+
+**Response OpenAPI Schema**
+
+```javascript
+{
+   "type":"object",
+   "properties":{
+      "data":{
+         "type":"array",
+         "items":{
+            "$ref":"#/components/schemas/Policy"
+         }
+      }
+   }
+}
+```
+
+```javascript
+{
+   "Policy":{
+      "type":"object",
+      "properties":{
+         "quoteId":{
+            "type":"string",
+            "format":"uuid"
+         },
+         "product":{
+            "type":"string",
+            "enum":[
+               "HEALTH_PROFESSIONAL",
+               "MANAGEMENT_LIABILITY",
+               "CYBER_LIABILITY"
+            ]
+         },
+         "occupationId":{
+            "type":"integer",
+            "format":"int64"
+         },
+         "inceptionDate":{
+            "type":"string",
+            "description":"ISO format date YYYY-MM-DD"
+         },
+         "purchaseDate":{
+            "type":"string",
+            "description":"ISO format date YYYY-MM-DD"
+         },
+         "expiryDate":{
+            "type":"string",
+            "description":"ISO format date YYYY-MM-DD"
+         },
+         "preferredLimit":{
+            "type":"integer",
+            "format":"int64"
+         },
+         "piPreferredLimit":{
+            "type":"integer",
+            "format":"int64"
+         },
+         "annualPrice":{
+            "type":"number",
+            "format":"double"
+         },
+         "pandPLPreferredLimit":{
+            "type":"integer",
+            "format":"int64"
+         }
+      }
+   }
+}
+```
+
+## Get Certificate of Insurance
+>**GET**
+>`/getCertificate`
+
+This API can be used to get COI PDF document 
+
+**Request OpenAPI Schema**
+
+```javascript
+{
+   "parameters":[
+      {
+         "name":"quoteId",
+         "in":"query",
+         "required":true,
+         "schema":{
+            "type":"string",
+            "format":"uuid"
+         }
+      }
+   ]
+}
+```
+
+**Response OpenAPI Schema**
+
+```javascript
+{
+   "content":{
+      "application/pdf":{
+         "schema":{
+            "type":"string",
+            "format":"binary"
+         }
+      }
+   }
+}
+```
+
+## Register Webhook
+>**GET**
+>`/api/v1/registerWebhook`
+
+This API can be used to register for webhooks e.g. cancellation of a policy
+
+**Request OpenAPI Schema**
+
+```javascript
+{
+   "parameters":[
+      {
+         "name":"endpoint",
+         "in":"query",
+         "required":true,
+         "schema":{
+            "type":"string"
+         }
+      },
+      {
+         "name":"event",
+         "in":"query",
+         "required":true,
+         "schema":{
+            "type":"string",
+            "enum":[
+               "PURCHASE",
+               "CANCELLATION",
+               "RENEWAL"
+            ]
+         }
+      }
+   ]
+}
+```
+
+
